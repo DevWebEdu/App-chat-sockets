@@ -7,6 +7,9 @@ import type { userResponseType } from "../../types/AuthTypes";
 export const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  // state del sidebar
+  const [isOpenSidebar , setIsOpenSidebar] = useState<boolean>(true);
+
   const [currentRoom, setCurrentRoom] = useState<string>("");
   const currentRoomRef = useRef<string>("");
   // evaluar si  es necesario enviar el nombre de la sala por url o con el estado es suficiente
@@ -19,9 +22,8 @@ export const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({
   const [rooms, setRooms] = useState<RoomType[]>([]);
   const [advises, setAdvises] = useState<string>("");
   const [advisesToRoom, setAdvisesToRoom] = useState<string>("");
-  const [error , setError ] = useState<string>('')
-  const [deletedNotification , setDeleteNotification] = useState<string>('')
-
+  const [error, setError] = useState<string>("");
+  const [deletedNotification, setDeleteNotification] = useState<string>("");
 
   const serverUrl = import.meta.env.VITE_API_URL;
 
@@ -41,18 +43,17 @@ export const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({
 
     const socket = socketRef.current;
     socket.connect();
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   
+    
+
     // eventos que vienen del back
     socket.on("user_connected", (user: any) => {
       setUsersConnected((prev) => {
-
         // Si ya existe, no lo agregues
         if (prev.includes(user.username)) return prev;
 
         // Si no existe, agrégalo
         return [...prev, user.username];
       });
-
     });
 
     // seteamos los mensajes con 'send_message'
@@ -90,17 +91,15 @@ export const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({
     });
 
     // controlador de Errores en TOAST
-    socket.on("error", ({error}) => {
-      setError(error)
-    })
+    socket.on("error", ({ error }) => {
+      setError(error);
+    });
 
     // Notificacion de Eliminacion correcta de room y redireccionamiento a la sala lobby
-    socket.on("notification_deleted_room",  ({message}) => {
-   
-        setDeleteNotification(message)
-        //updateCurrentRoom('lobby')
-
-    })
+    socket.on("notification_deleted_room", ({ message }) => {
+      setDeleteNotification(message);
+      updateCurrentRoom("");
+    });
 
     socket.on("disconnect", (cause) => {
       console.log(cause);
@@ -115,7 +114,6 @@ export const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({
     socketRef.current?.emit("message_recieve", msg, room);
   };
 
- 
   const joinRoom = (room: RoomType, user: userResponseType | undefined) => {
     // Limpiar notificaciones anteriores al cambiar de sala
     setAdvisesToRoom("");
@@ -130,10 +128,9 @@ export const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({
   };
 
   //eliminacion de la sala
-  const deleteRoom = ( roomId : string ) => {
-    socketRef.current?.emit("delete_room",roomId )
-    
-  }
+  const deleteRoom = (roomId: string) => {
+    socketRef.current?.emit("delete_room", roomId);
+  };
 
   useEffect(() => {
     return () => {
@@ -159,7 +156,9 @@ export const SocketContextProvider: React.FC<{ children: React.ReactNode }> = ({
         currentRoom,
         error,
         deletedNotification,
-        setDeleteNotification
+        setDeleteNotification,
+        isOpenSidebar,
+        setIsOpenSidebar,
       }}
     >
       {children}

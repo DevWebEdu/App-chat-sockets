@@ -14,6 +14,7 @@ export const RoomsList = () => {
     error,
     deletedNotification,
     setDeleteNotification,
+    isOpenSidebar
   } = useContext(SocketContext)!;
 
   const { user } = useContext(AuthContext)!;
@@ -41,7 +42,7 @@ export const RoomsList = () => {
   }, [deletedNotification, setDeleteNotification]);
 
   return (
-    <ul className="mt-5 rounded-lg flex flex-col space-y-2 h-full overflow-y-auto   ">
+    <ul className={` flex-1 overflow-y-auto  space-y-2   pb-4   ${ isOpenSidebar ? '' : 'hidden' }  pr-2`} >
       {rooms.map((room, i) => (
         <li
           key={i}
@@ -50,7 +51,7 @@ export const RoomsList = () => {
           }}
           className={` ${
             activeIndex === i ? "bg-neutral-800" : ""
-          }  w-full   rounded-lg hover:bg-neutral-800/50`}
+          }  w-full   rounded-lg hover:bg-neutral-800/50  `}
         >
           <button
             className=" flex justify-between w-full h-full  p-3   cursor-pointer rounded-lg   "

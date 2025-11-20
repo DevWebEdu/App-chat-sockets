@@ -2,6 +2,7 @@ import { ChatBox } from "../ui/ChatBox"
 import { FormChat } from "../ui/FormChat"
 
 export const Chat = () => {
+  
   return (
     <>
         {/* Component que muestra los moviemientos de un chat */}

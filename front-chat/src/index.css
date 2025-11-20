@@ -1,9 +1,39 @@
-
-
-*{
-
-    box-sizing: border-box;
-
+@import "tailwindcss";
+* {
+  box-sizing: border-box;
 }
 
-@import "tailwindcss";
+/*
+  Estilos
+  personalizados
+  para
+  el
+  scrollbar
+  */
+/*
+  
+.custom-scrollbar::-webkit-scrollbar {
+  width: 7px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #262626; 
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #737373; 
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #a3a3a3; 
+}
+
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #737373 #262626;
+}
+
+*/

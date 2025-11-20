@@ -223,12 +223,7 @@ export const SocketHandlers = (io: Server) => {
           // Eliminamos los mensajes del room
           await Message.deleteMany({ room: roomId });
           //sacando al socket del room
-          const currentRooms = Array.from(socket.rooms);
-          currentRooms.forEach((roomName) => {
-            if (roomName !== socket.id) {
-              socket.leave(roomName);
-            }
-          });
+          socket.leave(roomExists.name)
           // Informamos con una notificacion que el room fue elimado exitosamente
           io.emit("notification_deleted_room", {
             message: "Sala eliminada Correctamente",
@@ -242,6 +237,7 @@ export const SocketHandlers = (io: Server) => {
       }
     });
     
+
     socket.on("disconnect", () => {
       //SocketFunctions.disableUserToChat(socket)
       //console.log(socket.connected)

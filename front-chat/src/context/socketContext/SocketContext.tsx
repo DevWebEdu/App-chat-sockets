@@ -19,7 +19,9 @@ type SocketContextType = {
   currentRoom : string,
   error : string,
   deletedNotification : string,
-  setDeleteNotification : ( msg : string) => void
+  setDeleteNotification : ( msg : string) => void,
+  isOpenSidebar : boolean,
+  setIsOpenSidebar : ( open : boolean) => void,
 };
 
 export const SocketContext = createContext<SocketContextType | null>(null); 

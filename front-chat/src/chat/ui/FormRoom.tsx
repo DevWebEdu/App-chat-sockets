@@ -28,7 +28,7 @@ export const FormRoom = (  { stateForm , setStateForm }  : {
     name : ''
   }
 
-  const { createRoom } = useContext(SocketContext)!
+  const { createRoom, isOpenSidebar } = useContext(SocketContext)!
   const  { user } = useContext(AuthContext)!
   
   const { register , handleSubmit , resetField ,watch } = useForm({
@@ -61,7 +61,7 @@ export const FormRoom = (  { stateForm , setStateForm }  : {
 
 if (stateForm.formRoomSate ) {
   return (
-    <form  className=" p-3  bg-neutral-800 rounded-lg " noValidate onSubmit={handleSubmit(toSubmit)} >
+    <form  className={` p-3  bg-neutral-800 rounded-lg mr-2 ${ isOpenSidebar ? 'block' : 'hidden'} `}   noValidate onSubmit={handleSubmit(toSubmit)} >
         <div className=" flex flex-row-reverse justify-between items-start ">
             <button onClick={handleFormRoom} type="button" className="cursor-pointer">
                 <MdCancel size={25} />
